@@ -36,7 +36,7 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
   -  DS3_Payments.csv
 - Úložiště: lakehouse (Bronze_LH)
 - Pro ukázku práce s MS Fabric použit pro každý soubor jiný způsob ingestu (v praxi lepší méně způsobů pro snadnější údržbu)
-- Data vždy načtena v originální podobě bez úprav a změn datových typů
+- Data vždy načtena v originální podobě bez úprav a změn datových typů (v případě chybných záznamů tak nedojde k pádu pipeliny)
 
 #### **Files Ingestion**
 - Ingest Customers (dataflow):
@@ -49,33 +49,30 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
 ---
 ### **Data Quality & Cleansing (SILVER)**
 - Úložiště: warehouse (Silver-Gold_WH), schema Silver
-- Vzhledem k množství dat vrstvy odděleny pouze schematem
-POPSAT DATOVOU KVALITU A PROCES ČIŠTĚNÍ
-- Nekonzistence ID (prefix C)
-- Logika transakcí (amounts záporné/kladné)
-- Datové typy
-- Deduplikace
+- Vzhledem k malému množství tabulek vrstvy Silver a Gold odděleny pouze schematem
+- Silver tabulky nejprve jednorázově vytvořeny
+- Následně vytvořená procedura provede tranformaci dat
 
-Customers:
-- Deduplikace
-- Sjednocení IDs (i u Customer_name)
-- Zmenšení písmen v názvu kategorie do filtru PBI
-- Změna data typů
-
-Invoices:
-- Sjednocení CustomerId
-- Nulové a záporné hodnoty?
-- Číselník kódů zemí do filtru PBI
-- Změna data typů
-
-Payments:
-- Pořešit nezaplacené faktury
-- 
-
+#### Transformation
+- Tabulka Silver.Customers:
+  - Tabulka obsahuje samé textové řetězce, tudíž nebyla prováděna změna datových typů
+  - Provedena deduplikace (nalezeny duplicitní hodnoty ve zdrojovém souboru)
+  - Textové řetězce pro jistotu ošetřeny funkci TRIM (případné chyby v textových souborech)
+  - Sloupec CustomerCategory navíc převeden do stavu, že vždy první písmeno je velké a zbytek malé (lepší následná čitelnost - především v reportech)
+- Tabulka Silver.Invoices:
+  - Změna datových typů (převod pomocí TRY_CAST)
+  - Provedena deduplikace (zde preventivně, ve zdrojovém souboru nenalezeny duplicity)
+  - Textové řetězce pro jistotu ošetřeny funkci TRIM
+- Tabulka Silver.Payments:
+  - Změna datových typů (převod pomocí TRY_CAST)
+  - Vzhledem k tomu, že jedna má i více plateb a současně jedna platba se může vztahovat i k více fakturám (vazba M:N), vytvořila jsem surrogate klíč jako unikátní identifikátor záznamu - hashing
+  - Provedena deduplikace (zde preventivně pomocí SK, ve zdrojovém souboru nenalezeny duplicity)
+- U všech tabulek použit MERGE, který bere ohled i na soft deletes (přidán sloupec IsActive) - zde spíše preventivně vzhledem k povaze projektu (jelikož není plánován opakovaný load)
+  
 ---
 ### **Reporting (GOLD)**
 - Úložiště: warehouse (Silver-Gold_WH), schema Gold
-- Vzhledem k množství dat vrstvy odděleny pouze schematem
+- Vzhledem k malému množství tabulek vrstvy Silver a Gold odděleny pouze schematem
 - Pro reporting využito klasické star schema
 - Data připravena do klasického sémantického modelu v rámci MS Fabric pro následný reporting pomocí Power BI
 
