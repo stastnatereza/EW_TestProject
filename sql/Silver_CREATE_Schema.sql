@@ -1,1 +1,1 @@
-
+CREATE SCHEMA [Silver];
