@@ -26,7 +26,7 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
 
 ![Task Flow](images/TaskFlow.jpg)
 
-- Shrnutí architektury: zdrojové soubory -> Bronze (Lakehouse) -> čištění a transformace dat -> Silver (Warehouse schema) -> transformace dat pro reporting -> Gold (Warehouse schema) -> Power BI)
+- Shrnutí architektury: zdrojové soubory -> Bronze vrstva (Lakehouse) -> čištění a transformace dat -> Silver vrstva (Warehouse schema) -> transformace dat pro reporting -> Gold vrstva (Warehouse schema) -> Power BI)
 
 ---
 ### **Data Ingestion (BRONZE)**
@@ -34,24 +34,42 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
   -  DS1_Customers.txt
   -  DS2_Invoices.xlsx
   -  DS3_Payments.csv
-- Pro ukázku práce s MS Fabric použit pro každý soubor jiný způsob ingestu
-  - Ingest Customers (dataflow):
-    - Rozhraní dataflow vychází z klasického Power Query - vhodné řešení pro pracovníky, kteří chtějí no-code řešení a dobře znají prostředí Power Query (nicméně nevýhodou náročnost na spotřebu CU a méně možností)
-  - Ingest Invoices (pipeline - copy data activity):
-    - Velmi jednoduché nastavení source/destination
-  - Ingest Payments (PySpark notebook):
-    - Mnoho možností s využitím PySpark
+- Úložiště: lakehouse (Bronze_LH)
+- Pro ukázku práce s MS Fabric použit pro každý soubor jiný způsob ingestu (v praxi lepší méně způsobů pro snadnější údržbu)
 - Data vždy načtena v originální podobě bez úprav a změn datových typů
+
+#### **Files Ingestion**
+- Ingest Customers (dataflow):
+  - Rozhraní dataflow vychází z klasického Power Query - vhodné řešení pro pracovníky, kteří chtějí no-code řešení a dobře znají prostředí Power Query (nicméně nevýhodou náročnost na spotřebu CU a méně možností)
+- Ingest Invoices (pipeline - copy data activity):
+  - Velmi jednoduché nastavení source/destination
+- Ingest Payments (PySpark notebook):
+  - Mnoho možností s využitím PySpark
     
 ---
 ### **Data Quality & Cleansing (SILVER)**
+- Úložiště: warehouse (Silver-Gold_WH), schema Silver
+- Vzhledem k množství dat vrstvy odděleny pouze schematem
 POPSAT DATOVOU KVALITU A PROCES ČIŠTĚNÍ
+- Nekonzistence ID (prefix C)
+- Logika transakcí (amounts záporné/kladné)
+- Datové typy
+- Deduplikace
+- 
 
 ---
 ### **Reporting (GOLD)**
+- Úložiště: warehouse (Silver-Gold_WH), schema Gold
+- Vzhledem k množství dat vrstvy odděleny pouze schematem
 - Pro reporting využito klasické star schema
-- Model připraven do klasického sémantického modelu v rámci MS Fabric pro následný reporting pomocí Power BI
+- Data připravena do klasického sémantického modelu v rámci MS Fabric pro následný reporting pomocí Power BI
+
+- PŘÍPRAVA STAR SCHEMA:
+  - Dim_Customer
+  - Dim_Date
+  - Fact_Invoices
 
 ---
 ### **Orchestration**
 SCREEN PIPELINY
+ADRESÁŘE sql, images, notebooks
