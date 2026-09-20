@@ -3,9 +3,9 @@ table_name = "dbo.Payments"
 
 df = (
     spark.read.format("csv")
-    .option("header", "true")       # První řádek jako název sloupce
-    .option("delimiter", ";")       # Definice oddělovače
-    .option("inferSchema", "false") # Všechny datové typy jako string beze změny
+    .option("header", "true")
+    .option("delimiter", ";")
+    .option("inferSchema", "false")
     .load(file_path)
 )
 
