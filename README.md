@@ -26,12 +26,23 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
 
 ![Task Flow](images/TaskFlow.jpg)
 
-VLOŽIT OBRÁZEK ARCHITEKTURY (Zdrojové soubory -> Bronze (Lakehouse) -> Silver (Warehouse schema) -> Gold (Warehouse schema) -> Power BI)
+- Shrnutí architektury: zdrojové soubory -> Bronze (Lakehouse) -> čištění a transformace dat -> Silver (Warehouse schema) -> transformace dat pro reporting -> Gold (Warehouse schema) -> Power BI)
 
 ---
 ### **Data Ingestion (BRONZE)**
-POPSAT ingest
-
+- Ingest dat ze zdrojových systémů v různých formátech (.txt, .xlsx, .csv)
+  -  DS1_Customers.txt
+  -  DS2_Invoices.xlsx
+  -  DS3_Payments.csv
+- Pro ukázku práce s MS Fabric použit pro každý soubor jiný způsob ingestu
+  - Ingest Customers (dataflow):
+    - Rozhraní dataflow vychází z klasického Power Query - vhodné řešení pro pracovníky, kteří chtějí no-code řešení a dobře znají prostředí Power Query (nicméně nevýhodou náročnost na spotřebu CU a méně možností)
+  - Ingest Invoices (pipeline - copy data activity):
+    - Velmi jednoduché nastavení source/destination
+  - Ingest Payments (PySpark notebook):
+    - Mnoho možností s využitím PySpark
+- Data vždy načtena v originální podobě bez úprav a změn datových typů
+    
 ---
 ### **Data Quality & Cleansing (SILVER)**
 POPSAT DATOVOU KVALITU A PROCES ČIŠTĚNÍ
