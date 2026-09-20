@@ -55,6 +55,21 @@ POPSAT DATOVOU KVALITU A PROCES ČIŠTĚNÍ
 - Logika transakcí (amounts záporné/kladné)
 - Datové typy
 - Deduplikace
+
+Customers:
+- Deduplikace
+- Sjednocení IDs (i u Customer_name)
+- Zmenšení písmen v názvu kategorie do filtru PBI
+- Změna data typů
+
+Invoices:
+- Sjednocení CustomerId
+- Nulové a záporné hodnoty?
+- Číselník kódů zemí do filtru PBI
+- Změna data typů
+
+Payments:
+- Pořešit nezaplacené faktury
 - 
 
 ---
