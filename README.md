@@ -24,6 +24,8 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
   - Store data (GOLD): data připravené přímo pro vizualizace, nahrána do úložiště
   - Visualize: reporting nad daty z gold vrstvy
 
+![Task Flow](images/TaskFlow.jpg)
+
 VLOŽIT OBRÁZEK ARCHITEKTURY (Zdrojové soubory -> Bronze (Lakehouse) -> Silver (Warehouse schema) -> Gold (Warehouse schema) -> Power BI)
 
 ---
