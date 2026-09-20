@@ -5,18 +5,37 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
 
 ---
 ### **Architecture Solution**
-VLOŽIT OBRÁZEK ARCHITEKTURY (Zdrojové soubory -> Bronze (Lakehouse) -> Silver (Warehouse schema) -> Gold (Warehouse schema) -> Power BI)
-| Syntax | Description |
+- Technologická platforma: MS Fabric (reporting Power BI)
+- Architektura: Medallion
+- Zdroj dat: soubory v různých formátech (.txt, .xlsx, .csv)
+
+| Layer | Description |
 | ----------- | ----------- |
-| Header | Title |
-| Paragraph | Text |
+| BRONZE (raw) | Raw data ze zdrojových souborů, uložená bez transformací (struktura stejná jako na zdroji) |
+| SILVER (cleansed) | Vyčištěná, opravená a transformovaná data z bronze vrstvy |
+| GOLD (reporting) | Data připravená pro následných reporting - zodpovězení business otázek |
+
+- Vzorový task flow:
+  - Get data: nejprve je nutné provést ingest dat ze zdrojových systémů/souborů
+  - Store data (BRONZE): data v neměnné struktuře nahrána do úložiště
+  - Prepare data: prostor pro transformace/úpravy dat z bronze vrstvy
+  - Store data (SILVER): data již v upravené struktuře nahrána do úložiště
+  - Prepare data: příprava business-ready dat pro vizualizace
+  - Store data (GOLD): data připravené přímo pro vizualizace, nahrána do úložiště
+  - Visualize: reporting nad daty z gold vrstvy
+
+VLOŽIT OBRÁZEK ARCHITEKTURY (Zdrojové soubory -> Bronze (Lakehouse) -> Silver (Warehouse schema) -> Gold (Warehouse schema) -> Power BI)
 
 ---
-### **Data Quality & Cleansing**
+### **Data Ingestion (BRONZE)**
+POPSAT ingest
+
+---
+### **Data Quality & Cleansing (SILVER)**
 POPSAT DATOVOU KVALITU A PROCES ČIŠTĚNÍ
 
 ---
-### **Reporting**
+### **Reporting (GOLD)**
 - Pro reporting využito klasické star schema
 - Model připraven do klasického sémantického modelu v rámci MS Fabric pro následný reporting pomocí Power BI
 
