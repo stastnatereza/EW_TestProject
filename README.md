@@ -27,6 +27,7 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
 ![Task Flow](images/TaskFlow.jpg)
 
 - Shrnutí architektury: zdrojové soubory -> Bronze vrstva (Lakehouse) -> čištění a transformace dat -> Silver vrstva (Warehouse schema) -> transformace dat pro reporting -> Gold vrstva (Warehouse schema) -> Power BI)
+- Historizace vzhledem k povaze projektu řešena nebyla, ačkoliv kdyby se jednalo o aktivní projekt, zvolila bych historizaci SCD2 v Silver vrstvě
 
 ---
 ### **Data Ingestion (BRONZE)**
@@ -76,10 +77,18 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
 - Pro reporting využito klasické star schema
 - Data připravena do klasického sémantického modelu v rámci MS Fabric pro následný reporting pomocí Power BI
 
-- PŘÍPRAVA STAR SCHEMA:
-  - Dim_Customer
-  - Dim_Date
-  - Fact_Invoices
+#### Star Schema Tables
+- Tabulka Dim_Date:
+  - Vygenerovaná kalendářní tabulka s definovaným začátkem a koncem (pro tento případ, kdy PostingDate u tabulky Invoices obsahuje pouze leden z roku 2023, vygenerovaná data pouze pro tento rok a měsíc)
+- Tabulka Dim_Customer:
+  - Tabulka obsahuje všechny IsActive hodnoty ze Silver tabulky Customers
+- Tabulka Fact_Invoices:
+  - Tabulka obsahuje všechny IsActive hodnoty ze Silver tabulky Invoices
+  - K těmto hodnotám připojeny agregované hodnoty plateb (ze Silver tabulky Payments) - agregováno podle InvoiceNumber
+  - Ke každé faktuře vypočteno, jaká částka v rámci faktury je již uhrazena a jaká částka zbývá uhradit - na základě toho určen status celé faktury
+    - Paid = plně uhrazená faktura
+    - Partially Paid = částečně uhrazená faktura
+    - Open = neuhrazená faktura
 
 ---
 ### **Orchestration**
