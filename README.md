@@ -30,6 +30,7 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
 - Historizace vzhledem k povaze projektu řešena nebyla, ačkoliv kdyby se jednalo o aktivní projekt, zvolila bych historizaci SCD2 v Silver vrstvě
 
 #### **Orchestration**
+- Kdyby mělo být řešeno do detailů, bylo by vhodné ještě nastavit například notifikace v případě pádu pipeliny
 ![Orchestration Pipeline](images/OrchestrationPipeline.jpg)
 
 ---
