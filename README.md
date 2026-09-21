@@ -30,7 +30,7 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
 - Historizace vzhledem k povaze projektu řešena nebyla, ačkoliv kdyby se jednalo o aktivní projekt, zvolila bych historizaci SCD2 v Silver vrstvě
 
 #### **Orchestration**
-SCREEN PIPELINY
+![Orchestration Pipeline](images/OrchestrationPipeline.jpg)
 
 ---
 ### **Data Ingestion (BRONZE)**
@@ -99,6 +99,6 @@ SCREEN PIPELINY
 
 #### Power BI report
 - Data připojeny pomocí Direct lake (live connection)
-![Semantic Model](images/Report_FirstPage.jpg)
-![Semantic Model](images/Report_SecondPage.jpg)
-![Semantic Model](images/Report_SecondPage_Filter.jpg)
+![Report](images/Report_FirstPage.jpg)
+![Report](images/Report_SecondPage.jpg)
+![Report](images/Report_SecondPage_Filter.jpg)
