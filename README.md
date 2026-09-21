@@ -55,7 +55,7 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
 - Úložiště: warehouse (Silver-Gold_WH), schema Silver
 - Vzhledem k malému množství tabulek vrstvy Silver a Gold odděleny pouze schematem
 - Silver tabulky nejprve jednorázově vytvořeny
-- Následně vytvořená procedura provede tranformaci dat
+- Následně vytvořená procedura provede transformaci dat
 
 #### Transformation
 - Tabulka Silver.Customers:
@@ -77,6 +77,8 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
 ### **Reporting (GOLD)**
 - Úložiště: warehouse (Silver-Gold_WH), schema Gold
 - Vzhledem k malému množství tabulek vrstvy Silver a Gold odděleny pouze schematem
+- Gold tabulky nejprve jednorázově vytvořeny
+- Následně vytvořená procedura provede namodelování dat pro reporting
 - Pro reporting využito klasické star schema
 - Data připravena do klasického sémantického modelu v rámci MS Fabric pro následný reporting pomocí Power BI
 
@@ -92,6 +94,7 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
     - Paid = plně uhrazená faktura
     - Partially Paid = částečně uhrazená faktura
     - Open = neuhrazená faktura
+- Kdyby mělo být řešeno do detailů, bylo by dobré ještě vytvořit tabulku Dim_Country a napojit na CountryId z tabulky Fact_Invoices (do filtru v Power BI by následně bylo možné vložit název země místo ID)
 
 #### Gold Semantic model
 - Pomocí vytvořeného star schematu vytvořen sémantický model a nastaveny relace pro Power BI report
