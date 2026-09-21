@@ -29,6 +29,9 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
 - Shrnutí architektury: zdrojové soubory -> Bronze vrstva (Lakehouse) -> čištění a transformace dat -> Silver vrstva (Warehouse schema) -> transformace dat pro reporting -> Gold vrstva (Warehouse schema) -> Power BI)
 - Historizace vzhledem k povaze projektu řešena nebyla, ačkoliv kdyby se jednalo o aktivní projekt, zvolila bych historizaci SCD2 v Silver vrstvě
 
+#### **Orchestration**
+SCREEN PIPELINY
+
 ---
 ### **Data Ingestion (BRONZE)**
 - Ingest dat ze zdrojových systémů v různých formátech (.txt, .xlsx, .csv)
@@ -90,7 +93,5 @@ Smyslem testovacího projektu byl ingest dat ze zdrojových souborů, jejich ná
     - Partially Paid = částečně uhrazená faktura
     - Open = neuhrazená faktura
 
----
-### **Orchestration**
-SCREEN PIPELINY
-ADRESÁŘE sql, images, notebooks
+#### Gold Semantic model
+- Pomocí vytvořeného star schematu vytvořen sémantický model a nastaveny relace pro Power BI report
