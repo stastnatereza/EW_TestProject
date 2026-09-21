@@ -95,3 +95,10 @@ SCREEN PIPELINY
 
 #### Gold Semantic model
 - Pomocí vytvořeného star schematu vytvořen sémantický model a nastaveny relace pro Power BI report
+![Semantic Model](images/SemanticModel.jpg)
+
+#### Power BI report
+- Data připojeny pomocí Direct lake (live connection)
+![Semantic Model](images/Report_FirstPage.jpg)
+![Semantic Model](images/Report_SecondPage.jpg)
+![Semantic Model](images/Report_SecondPage_Filter.jpg)
